@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>CS Periodictable</title>
+        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+        <style>
+            body {
+                margin: 0;
+            }
+
+            .container {
+                width: 100vw;
+                height: 100vh;
+
+                font-family: Arial, Helvetica, sans-serif;
+                font-weight: bold;
+                font-size: 20px;
+
+                display: grid;
+                grid-template-columns: 300px 1fr 1fr;
+                grid-template-rows: 50px 1fr 1fr 100px;
+
+                /*gap: 10px;*/
+
+                padding: 10px;
+                box-sizing: border-box;
+            }
+
+            .container div {
+                padding: 10px;
+                border: 1px solid black;
+            }
+
+            .header {
+                background-color: rgb(201, 201, 201);
+                grid-column-start: 1;
+                grid-column-end: 3;
+
+            }
+
+            .Prop {
+                background-color:rgb(201, 201, 201);
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 1fr;
+            }
+            
+            .Tag {
+                text-align: left;
+            }
+            .search {
+                opacity: 0.5;
+                transition: opacity 1s;
+            }
+
+            .search:hover {
+                opacity: 1;
+            }
+
+            .lang {
+                text-align: left;
+            }
+
+            .Nav {
+                grid-row-start: 2;
+                grid-row-end: 5;
+            }
+
+            .Navbutton {
+                margin: 0;
+                border-color: black;
+                width: 280px;
+                height: 25px;
+            }
+
+            .Navbutton:hover {
+                background-color: gainsboro;
+                transition: background-color 0.2s;
+            }
+
+            .Navbutton:active {
+                background-color: rgb(201, 201, 201);
+                transition: background-color 0.2s;    
+            }
+            
+            .tooltip {
+                color: black;
+                cursor: pointer;
+                position: relative;
+            }
+
+            .tooltip span[role=tooltip] {
+                display: none;
+            }
+
+            .tooltip:hover span[role=tooltip] {
+                display: block;
+                block-size: fit-content;
+                font-size: 10px;
+                position: absolute;
+                top: -5px;
+                left: 108%;
+                color: black;
+                background-color: gainsboro;
+                border-radius: 6px;
+                font-size: 20px;
+            }
+
+            .expl {
+                color:black;
+                grid-row-start: 2;
+                grid-row-end: auto;
+                grid-column-start: 2;
+                grid-column-end: 4;
+                text-align: center;
+            }
+            .shell {
+                color:black;
+                grid-row-start: 2;
+                grid-row-end: 5;
+                grid-column-start: 2;
+                grid-column-end: 4;
+                text-align: left;
+                font-weight: normal;
+            }
+
+            .input1 {
+                max-width: 100px;
+                font-size: 10px;
+            }
+
+            .botom {
+                grid-column-start: 1;
+                grid-column-end: 4;
+            }
+
+            .ptable {
+                height: 300px;
+                margin-bottom: 10px;
+                display: grid;
+                grid-template-columns: repeat(18, 1fr);
+                grid-template-rows: repeat(7, 1fr);
+                margin: 0;
+                padding: 0;
+                gap: 2px;
+
+            }
+
+            .element {
+                padding: 0px;
+                height: 20px;
+                width: 22px;
+                margin-bottom: 0;
+                margin-left:0px;
+                margin-right:0px;
+                margin-top: 0px;
+                margin-bottom: 0px;
+            }
+
+            .ptableleg {
+                width: 1fr;
+                height: 175px;
+            }
+
+            .MM {
+                position: relative;
+                padding: 0;
+                font-size: 12px;
+                margin-left:0px;
+                margin-right:0px;
+                margin-top: 0px;
+                margin-bottom: 0px;
+                visibility: visible;
+                float: top;
+
+            }
+
+            .ES {
+                position: relative;
+                padding: 0;
+                font-size: 12px; 
+                margin-left:0px;
+                margin-right:0px;
+                margin-top: 0px;
+                margin-bottom: 0px;
+                visibility: visible;
+                float: top;
+            }
+
+            .pysub {
+                height: 40px;
+                padding: 2px;
+                align-items:center;
+                margin-left:0px;
+                margin-right:0px;
+                margin-top: 0px;
+                margin-bottom: 0px;
+                background-color: white;
+                border: none;
+                box-shadow: white;
+                float: top;
+                position: relative;
+            }
+
+
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                Chemosurf - Chemical Calculator
+            </div>
+            <div class="Prop">
+                <span class="Tag">Home</span>
+                <input class="search" type="search" placeholder="Search...">
+                <dfn class="lang"><a href="">EN</a>/<a href="">FR</a>/<a href="">DE</a></dfn>
+            </div>
+            <div class="Nav">
+                <button class="Navbutton">
+                    <a href="230322_Chemosurf_Landing_Page.html" class="Home">
+                        <dfn class="tooltip">
+                            Home <span role="tooltip">
+                                To the Homepage
+                                </span>
+                        </dfn>
+                    </a>
+                </button><br>
+                <button class="Navbutton">
+                    <a href="" class="Home">
+                        <dfn class="tooltip">
+                            Periodic Table <span role="tooltip">
+                                Interactive periodic Table with properties
+                                </span>
+                        </dfn>
+                    </a>
+                </button></br>
+                <button class="Navbutton">
+                    <a href="final.html" class="Home">
+                        <dfn class="tooltip">
+                            Chemical Equilibrium <span role="tooltip">
+                                Assesses the coeefficients of a chemical reaction
+                                </span>
+                        </dfn>
+                    </a>
+                </button></br>
+            </button><br>
+
+            </div>
+            <div class="shell">
+                <div class="ptable">
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table('0')">
+                            <span class="MM">1</span>
+                            <span class="ES">H</span>
+                        </button>
+                    </div>
+                    <div class="elr1_blank" style="grid-column-start: 2; grid-column-end: 18; border: hidden;">
+
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table('1')">
+                            <span class="MM">2</span>
+                            <span class="ES">Ne</span>
+                        </button>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table('2')">
+                            <span class="MM">3</span>
+                            <span class="ES">Li</span>
+                        </button>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table('3')">
+                            <span class="MM">4</span>
+                            <span class="ES">Be</span>
+                        </button>
+                    </div>
+                    <div class="elr2_blank" style="grid-column-start: 3; grid-column-end: 13; border: hidden;">
+
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table('4')">
+                            <span class="MM">5</span>
+                            <span class="ES">B</span>
+                        </button>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table('5')">
+                            <span class="MM">6</span>
+                            <span class="ES">C</span>
+                        </button>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table('6')">
+                            <span class="MM">7</span>
+                            <span class="ES">N</span>
+                        </button>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table('7')">
+                            <span class="MM">8</span>
+                            <span class="ES">O</span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table('8')">
+                            <span class="MM">9</span>
+                            <span class="ES">F</span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table('9')">
+                            <span class="MM">10</span>
+                            <span class="ES">Ne</span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table('10')">
+                            <span class="MM">11</span>
+                            <span class="ES">Na</span>
+
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table('11')">
+                            <span class="MM">12</span>
+                            <span class="ES">Mg</span>
+
+                    </div>
+                    <div class="elr2_blank" style="grid-column-start: 3; grid-column-end: 13; border: hidden;">
+
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table('12')">
+                            <span class="MM">13</span>
+                            <span class="ES">Al</span>
+
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table('13')">
+                            <span class="MM">14</span>
+                            <span class="ES">Si</span>
+
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table('14')">
+                            <span class="MM">15</span>
+                            <span class="ES">P</span>
+
+                        
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table('15')">
+                            <span class="MM">16</span>
+                            <span class="ES">S</span>
+
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table('16')">
+                            <span class="MM"> 17 </span>
+                            <span class="ES"> Cl </span>
+
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table('17')">
+                            <span class="MM"> 18 </span>
+                            <span class="ES"> Ar </span>
+
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table('18')">
+                            <span class="MM"> 19 </span>
+                            <span class="ES"> K </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table('19')">
+                            <span class="MM"> 20 </span>
+                            <span class="ES"> Ca </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 20 ' )"><span class="MM"> 21 </span><span class="ES"> Sc </span>
+                        
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 21 ' )"><span class="MM"> 22 </span><span class="ES"> Ti </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 22 ' )"><span class="MM"> 23 </span><span class="ES"> V </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 23 ' )"><span class="MM"> 24 </span><span class="ES"> Cr </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 24 ' )"><span class="MM"> 25 </span><span class="ES"> Mn </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 25 ' )"><span class="MM"> 26 </span><span class="ES"> Fe </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 26 ' )"><span class="MM"> 27 </span><span class="ES"> Co </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 27 ' )"><span class="MM"> 28 </span><span class="ES"> Ni </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 28 ' )"><span class="MM"> 29 </span><span class="ES"> Cu </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 29 ' )"><span class="MM"> 30 </span><span class="ES"> Zn </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 30 ' )"><span class="MM"> 31 </span><span class="ES"> Ga </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 31 ' )"><span class="MM"> 32 </span><span class="ES"> Ge </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 32 ' )"><span class="MM"> 33 </span><span class="ES"> As </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 33 ' )"><span class="MM"> 34 </span><span class="ES"> Se </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 34 ' )"><span class="MM"> 35 </span><span class="ES"> Br </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 35 ' )"><span class="MM"> 36 </span><span class="ES"> Kr </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 36 ' )"><span class="MM"> 37 </span><span class="ES"> Rb </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 37 ' )"><span class="MM"> 38 </span><span class="ES"> Sr </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 38 ' )"><span class="MM"> 39 </span><span class="ES"> Y </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 39 ' )"><span class="MM"> 40 </span><span class="ES"> Zr </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 40 ' )"><span class="MM"> 41 </span><span class="ES"> Nb </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 41 ' )"><span class="MM"> 42 </span><span class="ES"> Mo </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 42 ' )"><span class="MM"> 43 </span><span class="ES"> Tc </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 43 ' )"><span class="MM"> 44 </span><span class="ES"> Ru </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 44 ' )"><span class="MM"> 45 </span><span class="ES"> Rh </span>
+                    </div>
+                    <div class="element">
+                        <button type="submit "class="pysub" py-mouseover="period_table( ' 45 ' )"><span class="MM"> 46 </span><span class="ES"> Pd </span>
+                        
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                        
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                        
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                        
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                        
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                        
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                        
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                        
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                        
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    <div class="element">
+
+                    </div>
+                    
+                    
+                    
+                </div>
+                <div class="ptableleg">
+                    <p>Name: <span id="elname"></span></p>
+                    <p>Symbol: <span id="syname"></span></p>
+                    <py-config>
+                        packages =["pandas"]
+                    </py-config>
+                    <py-script>
+import pandas as pd
+from pyodide.http import open_url
+def period_table(x):
+    pd.options.display.max_rows = 119
+    pd.options.display.max_columns = 5
+    url = "https://gist.githubusercontent.com/robertwb/22aa4dbfb6bcecd94f2176caa912b952/raw/2dfcd7ebb235bdd9fb13b955128389c0b9efe394/Periodic%2520Table%2520of%2520Elements.csv"
+    df = pd.read_csv(open_url(url))
+    Element('elname').element.innerText = df.iloc[int(x), 1]
+    Element('syname').element.innerText = df.iloc[int(x), 2]
+                    </py-script>
+
+                </div>
+
+            </div>
+
+        </div>
+    </body>
+</html>
